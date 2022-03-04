@@ -1,0 +1,19 @@
+build: false
+shallow_clone: false
+platform: 'x86'
+clone_folder: C:\projects\zodiacsign
+init:
+  - cinst php
+  - SET PATH=C:\tools\php\;%PATH%
+install:
+  - cd c:\tools\php
+  - copy php.ini-production php.ini
+  - echo date.timezone="UTC" >> php.ini
+  - echo extension_dir=ext >> php.ini
+  - echo extension=php_openssl.dll >> php.ini
+  - cd C:\projects\zodiacsign
+  - php -r "readfile('https://getcomposer.org/installer');" | php
+  - php composer.phar install --prefer-dist --no-interaction
+test_script:
+  - cd C:\projects\zodiacsign
+  - vendor\bin\phpunit.bat
